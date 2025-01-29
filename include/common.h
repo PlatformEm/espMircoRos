@@ -42,6 +42,9 @@ extern float maxAccelerationInHz2;
 #define dirPinStepperZ 16
 #define enablePinStepperZ 17
 
+#define emergencyStopPin 39 // Define the pin number for the emergency stop
+#define emergencyStopPowerPin 40 // Define the pin number to provide power for the emergency stop
+
 // Define constants
 const float pulley_diameter = 3.0; // Diameter of the pulley in cm
 const int pulses_per_rev = 200; // Number of pulses per revolution of the motor

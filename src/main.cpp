@@ -153,6 +153,11 @@ void setup() {
     stepperZ->setAutoEnable(false);
     stepperZ->enableOutputs();
 
+    // Configure emergency stop pins
+    pinMode(emergencyStopPin, INPUT_PULLUP);
+    pinMode(emergencyStopPowerPin, OUTPUT);
+    digitalWrite(emergencyStopPowerPin, HIGH); // Set pin 40 to HIGH
+
     // ROS setup
     allocator = rcl_get_default_allocator();
     RCCHECK(rclc_support_init(&support, 0, NULL, &allocator));
@@ -194,6 +199,17 @@ void setup() {
 unsigned long last_publish_time = 0;
 
 void loop() {
+    static bool emergencyStopTriggered = false;
+
+    // Check the state of the emergency stop pin
+    if (digitalRead(emergencyStopPin) == LOW && !emergencyStopTriggered) {
+        emergencyStopTriggered = true;
+        stopAllMotors();
+        publish_log("Emergency stop triggered. All motors stopped.");
+    } else if (digitalRead(emergencyStopPin) == HIGH && emergencyStopTriggered) {
+        emergencyStopTriggered = false;
+    }
+
     unsigned long current_time = millis();
     if (current_time - last_publish_time >= 500) {
         last_publish_time = current_time;
