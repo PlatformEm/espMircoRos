@@ -34,9 +34,9 @@ extern float maxAccelerationInHz2;
 #define enablePinStepperX 7
 #define limitSwitchPin 8 //Same pin for now
 
-#define stepPinStepperY 9
-#define dirPinStepperY 10
-#define enablePinStepperY 11
+#define stepPinStepperY 10
+#define dirPinStepperY 11
+#define enablePinStepperY 12
 
 #define stepPinStepperZ 15
 #define dirPinStepperZ 16
@@ -80,6 +80,7 @@ void moveMotorX(const std_msgs__msg__Float32* msg);
 void moveMotorY(const std_msgs__msg__Float32* msg);
 void moveMotorZ(const std_msgs__msg__Float32* msg);
 void moveMotorsXYZ(const std_msgs__msg__Float32* msgX, const std_msgs__msg__Float32* msgY, const std_msgs__msg__Float32* msgZ);
+void stopAllMotors(); // Add this line
 
 // Function prototypes for speed and acceleration conversion
 float convertSpeedToHz(float speed_mm_per_s);
