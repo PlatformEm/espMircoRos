@@ -155,12 +155,21 @@ void setup() {
 
     // ROS setup
     allocator = rcl_get_default_allocator();
-    RCCHECK(rclc_support_init(&support, 0, NULL, &allocator));
+
+    rcl_init_options_t init_options = rcl_get_zero_initialized_init_options();
+    RCCHECK(rcl_init_options_init(&init_options, allocator));
+    // Set the domain ID to the hostname robot_id
+    RCCHECK(rcl_init_options_set_domain_id(&init_options, 0));
+
+    RCCHECK(rclc_support_init_with_options(&support, 0, NULL, &init_options, &allocator));
     RCCHECK(rclc_node_init_default(&node, "main_node", "", &support));
 
     // Initialize the log publisher (defined in logpublisher.cpp)
     init_log_publisher(&node);
     publish_log("Log publisher booted");
+
+    // Clean up init_options after use  
+    RCCHECK(rcl_init_options_fini(&init_options));
 
     // Initialize motor system
     initMotorControl(stepperX, stepperY, stepperZ);

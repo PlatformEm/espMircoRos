@@ -34,9 +34,9 @@ extern float maxAccelerationInHz2;
 #define enablePinStepperX 7
 #define limitSwitchPin 8 //Same pin for now
 
-#define stepPinStepperY 9
-#define dirPinStepperY 10
-#define enablePinStepperY 11
+#define stepPinStepperY 10
+#define dirPinStepperY 11
+#define enablePinStepperY 12
 
 #define stepPinStepperZ 15
 #define dirPinStepperZ 16
